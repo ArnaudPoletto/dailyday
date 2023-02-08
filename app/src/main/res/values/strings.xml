@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">DailyDay</string>
-    <string name="start_button_text">Hi!</string>
+    <string name="evaluation_button_text">Evaluate your day!</string>
 </resources>
