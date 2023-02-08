@@ -89,6 +89,12 @@ class ModifyEvaluationActivity : AppCompatActivity() {
                     // update entry
                     entry.ref.setValue(modified_entry)
                     Toast.makeText(this, "Evaluation updated.", Toast.LENGTH_SHORT).show()
+
+                    // go to main
+                    val intent = android.content.Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+
                     return@addOnSuccessListener
                 }
             }
