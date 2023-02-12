@@ -12,13 +12,13 @@
         android:theme="@style/Theme.DailyDay"
         tools:targetApi="31">
         <activity
-            android:name=".ModifyEvaluationActivity"
+            android:name=".EditEvaluationActivity"
             android:exported="false" />
         <activity
             android:name=".ModifiyEvaluationActivitz"
             android:exported="false" />
         <activity
-            android:name=".EvaluationActivity"
+            android:name=".CreateEvaluationActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"

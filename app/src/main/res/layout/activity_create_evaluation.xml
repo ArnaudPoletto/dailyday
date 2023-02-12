@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EvaluationActivity">
+    tools:context=".CreateEvaluationActivity">
 
     <EditText
         android:id="@+id/evaluation_appreciation"
@@ -59,7 +59,7 @@
         tools:layout_editor_absoluteY="14dp" />
 
     <Button
-        android:id="@+id/modify_button"
+        android:id="@+id/edit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"

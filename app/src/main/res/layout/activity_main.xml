@@ -14,7 +14,7 @@
         android:layout_marginTop="467dp"
         android:layout_marginEnd="161dp"
         android:layout_marginBottom="100dp"
-        android:text="@string/evaluation_button_text"
+        android:text="@string/create_evaluation_button_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"

@@ -31,6 +31,9 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Registers the user
+     */
     private fun register() {
         val username: String = findViewById<EditText>(R.id.register_field_username).text.toString()
         val email: String = findViewById<EditText>(R.id.register_field_email).text.toString()
@@ -72,6 +75,9 @@ class RegisterActivity : AppCompatActivity() {
             }
     }
 
+    /**
+     * Goes to the login activity
+     */
     private fun login() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)

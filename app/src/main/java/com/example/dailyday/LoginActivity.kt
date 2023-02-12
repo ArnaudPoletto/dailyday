@@ -28,6 +28,9 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Logs in the user
+     */
     private fun login() {
         val email = findViewById<EditText>(R.id.login_field_email).text.toString()
         val password = findViewById<EditText>(R.id.login_field_password).text.toString()
@@ -42,7 +45,6 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithEmail:success")
-                    val user = firebaseAuth.currentUser
 
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
@@ -57,6 +59,9 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
+    /**
+     * Goes to the register activity
+     */
     private fun register() {
         val intent = Intent(this, RegisterActivity::class.java)
         startActivity(intent)

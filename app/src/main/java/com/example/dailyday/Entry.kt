@@ -1,51 +1,126 @@
 package com.example.dailyday
 
+import java.util.Calendar
 import java.util.Date
 
 class Entry : java.io.Serializable{
-    private var timestamp: Long? = null
-    private var appreciation: Int? = null
+    private var appreciation: EntryScore? = null
+    private var energy: EntryScore? = null
     private var hoursOfSleep: Double? = null
-    private var energy: Int? = null
+
+    private lateinit var date: EntryDate
+
+    private var updatedAt: Long = Date().time
+    private var createdAt: Long = Date().time
 
 
     constructor() { }
 
-    constructor(appreciation: Int?, hoursOfSleep: Double?, energy: Int?) {
-        if (appreciation != null && (appreciation < -10 || appreciation > 10)) {
-            throw IllegalArgumentException("Appreciation must be between -10 and 10")
+    /**
+     * Constructor for creating a new entry from basic data types
+     * @param appreciation the appreciation score
+     * @param energy the energy score
+     * @param hoursOfSleep the hours of sleep
+     * @param date the date
+     * @throws IllegalArgumentException if the data is invalid
+     */
+    constructor(
+        appreciation: Int?,
+        energy: Int?,
+        hoursOfSleep: Double?,
+        date: Calendar
+    ) {
+        if (appreciation != null) {
+            this.appreciation = EntryScore(appreciation)
         }
-        if (hoursOfSleep != null && (hoursOfSleep < 0 || hoursOfSleep > 24)) {
-            throw IllegalArgumentException("Hours of sleep must be between 0 and 24")
+        if (energy != null) {
+            this.energy = EntryScore(energy)
         }
-        if (energy != null && (energy < -10 || energy > 10)) {
-            throw IllegalArgumentException("Energy must be between -10 and 10")
-        }
-
-        this.timestamp = Date().time
-
-        this.appreciation = appreciation
         this.hoursOfSleep = hoursOfSleep
-        this.energy = energy
+        this.date = EntryDate(date)
     }
 
-    fun getTimestamp(): Long {
-        if (timestamp == null) {
-            timestamp = 0
+    /**
+     * Constructor for creating a new entry from entity data types
+     * @param appreciation the appreciation score
+     * @param energy the energy score
+     * @param hoursOfSleep the hours of sleep
+     * @param date the date
+     * @throws IllegalArgumentException if the data is invalid
+     */
+    constructor(
+        appreciation: EntryScore?,
+        energy: EntryScore?,
+        hoursOfSleep: Double?,
+        date: EntryDate
+    ) {
+        this.appreciation = appreciation
+        this.energy = energy
+        this.hoursOfSleep = hoursOfSleep
+        this.date = date
+    }
+
+    /**
+     * get the appreciation score
+     * @return the appreciation score
+     */
+    fun getAppreciation(): EntryScore? {
+        if (this.appreciation == null) {
+            return null
         }
 
-        return timestamp as Long
+        return this.appreciation!!
     }
 
-    fun getAppreciation(): Int? {
-        return appreciation
+    /**
+     * get the energy score
+     * @return the energy score
+     */
+    fun getEnergy(): EntryScore? {
+        if (this.energy == null) {
+            return null
+        }
+
+        return this.energy!!
     }
 
+    /**
+     * get the hours of sleep
+     * @return the hours of sleep
+     */
     fun getHoursOfSleep(): Double? {
         return hoursOfSleep
     }
 
-    fun getEnergy(): Int? {
-        return energy
+    /**
+     * get the date
+     * @return the date
+     */
+    fun getDate(): EntryDate {
+        return date
+    }
+
+    /**
+     * get the created at timestamp
+     * @return the created at timestamp
+     */
+    fun getCreatedAt(): Long {
+        return createdAt
+    }
+
+    /**
+     * get the updated at timestamp
+     * @return the updated at timestamp
+     */
+    fun getUpdatedAt(): Long {
+        return updatedAt
+    }
+
+    /**
+     * set the updated at timestamp
+     * @param updatedAt the updated at timestamp
+     */
+    fun setUpdatedAt(updatedAt: Long) {
+        this.updatedAt = updatedAt
     }
 }
