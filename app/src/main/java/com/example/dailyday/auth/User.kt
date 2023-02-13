@@ -1,4 +1,4 @@
-package com.example.dailyday
+package com.example.dailyday.auth
 
 class User {
     private lateinit var username: String

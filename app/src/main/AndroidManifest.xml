@@ -12,22 +12,22 @@
         android:theme="@style/Theme.DailyDay"
         tools:targetApi="31">
         <activity
-            android:name=".EditEvaluationActivity"
+            android:name=".activities.evaluation.EditEvaluationActivity"
             android:exported="false" />
         <activity
             android:name=".ModifiyEvaluationActivitz"
             android:exported="false" />
         <activity
-            android:name=".CreateEvaluationActivity"
+            android:name=".activities.evaluation.CreateEvaluationActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.auth.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".activities.auth.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

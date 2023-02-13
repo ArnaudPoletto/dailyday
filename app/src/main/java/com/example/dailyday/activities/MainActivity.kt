@@ -1,7 +1,12 @@
-package com.example.dailyday
+package com.example.dailyday.activities
 
 import android.os.Bundle
 import android.widget.Button
+import com.example.dailyday.database.DatabaseEntries
+import com.example.dailyday.R
+import com.example.dailyday.activities.auth.RegisterActivity
+import com.example.dailyday.activities.evaluation.CreateEvaluationActivity
+import com.example.dailyday.activities.evaluation.EditEvaluationActivity
 import com.google.firebase.FirebaseApp
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -42,7 +47,10 @@ class MainActivity : BaseActivity() {
         evaluateButton.isEnabled = false
 
         // Modify button
-        DatabaseEntries.loggedInUserAlreadyEvaluatedToday(auth, Firebase.database) { alreadyEvaluated ->
+        DatabaseEntries.loggedInUserAlreadyEvaluatedToday(
+            auth,
+            Firebase.database
+        ) { alreadyEvaluated ->
             if (alreadyEvaluated) {
                 evaluateButton.text = getString(R.string.edit_evaluation_button_text)
             } else {
@@ -53,7 +61,10 @@ class MainActivity : BaseActivity() {
 
         // Choose which activity to go to
         evaluateButton.setOnClickListener {
-            DatabaseEntries.loggedInUserAlreadyEvaluatedToday(auth, Firebase.database) { alreadyEvaluated ->
+            DatabaseEntries.loggedInUserAlreadyEvaluatedToday(
+                auth,
+                Firebase.database
+            ) { alreadyEvaluated ->
                 if (alreadyEvaluated) {
                     goToActivity(EditEvaluationActivity::class.java)
                 } else {

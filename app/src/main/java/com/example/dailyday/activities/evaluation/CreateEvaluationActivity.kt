@@ -1,9 +1,13 @@
-package com.example.dailyday
+package com.example.dailyday.activities.evaluation
 
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.widget.EditText
 import android.widget.Toast
+import com.example.dailyday.database.DatabaseEntries
+import com.example.dailyday.R
+import com.example.dailyday.activities.BaseActivity
+import com.example.dailyday.activities.MainActivity
 import com.example.dailyday.entry.Entry
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -19,7 +23,10 @@ class CreateEvaluationActivity : BaseActivity() {
         // Evaluate button
         val evaluate = findViewById<android.widget.Button>(R.id.edit_button)
         evaluate.setOnClickListener {
-            DatabaseEntries.loggedInUserAlreadyEvaluatedToday(auth, Firebase.database) { alreadyEvaluated ->
+            DatabaseEntries.loggedInUserAlreadyEvaluatedToday(
+                auth,
+                Firebase.database
+            ) { alreadyEvaluated ->
                 if (alreadyEvaluated) {
                     Toast.makeText(this, "You already evaluated today", Toast.LENGTH_SHORT).show()
                     return@loggedInUserAlreadyEvaluatedToday

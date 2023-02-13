@@ -1,4 +1,4 @@
-package com.example.dailyday
+package com.example.dailyday.activities.auth
 
 import android.content.ContentValues.TAG
 import android.content.Intent
@@ -8,6 +8,8 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.example.dailyday.R
+import com.example.dailyday.activities.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {

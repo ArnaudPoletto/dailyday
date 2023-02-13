@@ -1,4 +1,4 @@
-package com.example.dailyday
+package com.example.dailyday.database
 
 import com.example.dailyday.entry.Entry
 import com.example.dailyday.entry.EntryDate

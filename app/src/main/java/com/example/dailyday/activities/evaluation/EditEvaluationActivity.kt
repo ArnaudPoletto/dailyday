@@ -1,9 +1,13 @@
-package com.example.dailyday
+package com.example.dailyday.activities.evaluation
 
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.widget.EditText
 import android.widget.Toast
+import com.example.dailyday.database.DatabaseEntries
+import com.example.dailyday.R
+import com.example.dailyday.activities.BaseActivity
+import com.example.dailyday.activities.MainActivity
 import com.example.dailyday.entry.Entry
 import com.example.dailyday.entry.EntryScore
 import com.example.dailyday.entry.EntrySleep
@@ -31,7 +35,10 @@ class EditEvaluationActivity : BaseActivity() {
     }
 
     fun checkAlreadyEvaluated() {
-        DatabaseEntries.loggedInUserAlreadyEvaluatedToday(auth, Firebase.database) { alreadyEvaluated ->
+        DatabaseEntries.loggedInUserAlreadyEvaluatedToday(
+            auth,
+            Firebase.database
+        ) { alreadyEvaluated ->
             if (!alreadyEvaluated) {
                 Toast.makeText(this, "You haven't evaluated today", Toast.LENGTH_SHORT).show()
                 goToActivity(MainActivity::class.java)
@@ -53,13 +60,17 @@ class EditEvaluationActivity : BaseActivity() {
             val hoursOfSleep: EntrySleep? = entry.getHoursOfSleep()
 
             if (appreciation != null) {
-                findViewById<EditText>(R.id.evaluation_appreciation).setText(appreciation.getValue().toString())
+                findViewById<EditText>(R.id.evaluation_appreciation).setText(
+                    appreciation.getValue().toString()
+                )
             }
             if (energy != null) {
                 findViewById<EditText>(R.id.evaluation_energy).setText(energy.getValue().toString())
             }
             if (hoursOfSleep != null) {
-                findViewById<EditText>(R.id.evaluation_hours_of_sleep).setText(hoursOfSleep.getValue().toString())
+                findViewById<EditText>(R.id.evaluation_hours_of_sleep).setText(
+                    hoursOfSleep.getValue().toString()
+                )
             }
         }
     }

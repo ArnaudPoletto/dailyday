@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditEvaluationActivity">
+    tools:context=".activities.evaluation.EditEvaluationActivity">
 
     <EditText
         android:id="@+id/evaluation_appreciation"
