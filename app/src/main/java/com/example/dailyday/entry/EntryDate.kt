@@ -1,4 +1,4 @@
-package com.example.dailyday
+package com.example.dailyday.entry
 
 import java.util.Calendar
 

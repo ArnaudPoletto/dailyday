@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.text.format.DateFormat
 import android.widget.EditText
 import android.widget.Toast
+import com.example.dailyday.entry.Entry
+import com.example.dailyday.entry.EntryScore
+import com.example.dailyday.entry.EntrySleep
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.util.*
@@ -47,16 +50,16 @@ class EditEvaluationActivity : BaseActivity() {
 
             val appreciation: EntryScore? = entry.getAppreciation()
             val energy: EntryScore? = entry.getEnergy()
-            val hoursOfSleep: Double? = entry.getHoursOfSleep()
+            val hoursOfSleep: EntrySleep? = entry.getHoursOfSleep()
 
             if (appreciation != null) {
-                findViewById<EditText>(R.id.evaluation_appreciation).setText(appreciation.getScore().toString())
+                findViewById<EditText>(R.id.evaluation_appreciation).setText(appreciation.getValue().toString())
             }
             if (energy != null) {
-                findViewById<EditText>(R.id.evaluation_energy).setText(energy.getScore().toString())
+                findViewById<EditText>(R.id.evaluation_energy).setText(energy.getValue().toString())
             }
             if (hoursOfSleep != null) {
-                findViewById<EditText>(R.id.evaluation_hours_of_sleep).setText(hoursOfSleep.toString())
+                findViewById<EditText>(R.id.evaluation_hours_of_sleep).setText(hoursOfSleep.getValue().toString())
             }
         }
     }

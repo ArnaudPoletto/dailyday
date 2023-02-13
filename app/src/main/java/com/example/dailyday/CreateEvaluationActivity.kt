@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.format.DateFormat
 import android.widget.EditText
 import android.widget.Toast
+import com.example.dailyday.entry.Entry
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.util.Calendar

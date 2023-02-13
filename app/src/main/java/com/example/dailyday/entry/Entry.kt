@@ -1,4 +1,4 @@
-package com.example.dailyday
+package com.example.dailyday.entry
 
 import java.util.Calendar
 import java.util.Date
@@ -6,7 +6,7 @@ import java.util.Date
 class Entry : java.io.Serializable{
     private var appreciation: EntryScore? = null
     private var energy: EntryScore? = null
-    private var hoursOfSleep: Double? = null
+    private var hoursOfSleep: EntrySleep? = null
 
     private lateinit var date: EntryDate
 
@@ -36,7 +36,9 @@ class Entry : java.io.Serializable{
         if (energy != null) {
             this.energy = EntryScore(energy)
         }
-        this.hoursOfSleep = hoursOfSleep
+        if (hoursOfSleep != null) {
+            this.hoursOfSleep = EntrySleep(hoursOfSleep)
+        }
         this.date = EntryDate(date)
     }
 
@@ -51,7 +53,7 @@ class Entry : java.io.Serializable{
     constructor(
         appreciation: EntryScore?,
         energy: EntryScore?,
-        hoursOfSleep: Double?,
+        hoursOfSleep: EntrySleep?,
         date: EntryDate
     ) {
         this.appreciation = appreciation
@@ -88,7 +90,7 @@ class Entry : java.io.Serializable{
      * get the hours of sleep
      * @return the hours of sleep
      */
-    fun getHoursOfSleep(): Double? {
+    fun getHoursOfSleep(): EntrySleep? {
         return hoursOfSleep
     }
 
