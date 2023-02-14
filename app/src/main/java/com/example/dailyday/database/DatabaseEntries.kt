@@ -1,5 +1,6 @@
 package com.example.dailyday.database
 
+import com.example.dailyday.activities.HistoryActivity
 import com.example.dailyday.entry.Entry
 import com.example.dailyday.entry.EntryDate
 import com.example.dailyday.entry.EntryScore
@@ -96,6 +97,21 @@ class DatabaseEntries {
                     }
                 }
                 callback(null)
+            }
+        }
+
+        fun getLoggedInUserEvaluatedDates(
+            auth: FirebaseAuth,
+            database: FirebaseDatabase,
+            callback: (List<EntryDate>) -> Unit
+        ) {
+            val dates = mutableListOf<EntryDate>()
+            getLoggedInUserEntries(auth, database) { entries ->
+                for (entry in entries) {
+                    val date: EntryDate = entry.getDate()
+                    dates.add(date)
+                }
+                callback(dates)
             }
         }
 

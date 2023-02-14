@@ -1,10 +1,11 @@
 package com.example.dailyday.entry
 
 import java.util.Calendar
+import java.util.Date
 
 class EntryDate {
     private var year: Int = 1970
-    private var month: Int = 1
+    private var month: Int = 1 // 1-indexed
     private var day: Int = 1
 
     constructor() { }
@@ -17,15 +18,7 @@ class EntryDate {
      * @throws IllegalArgumentException if the data is invalid
      */
     constructor(year: Int, month: Int, day: Int) {
-        if (year < 1970) {
-            throw IllegalArgumentException("Year must be greater than 1970")
-        }
-        if (month < 0 || month > 11) {
-            throw IllegalArgumentException("Month must be between 0 and 11")
-        }
-        if (day < 1 || day > 31) {
-            throw IllegalArgumentException("Day must be between 1 and 31")
-        }
+        checkDate(year, month, day)
 
         this.year = year
         this.month = month
@@ -37,9 +30,26 @@ class EntryDate {
      * @param calendar the calendar
      */
     constructor(calendar: Calendar) {
-        this.year = calendar.get(Calendar.YEAR)
-        this.month = calendar.get(Calendar.MONTH)
-        this.day = calendar.get(Calendar.DAY_OF_MONTH)
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH) + 1 // Calendar months are 0-indexed
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        checkDate(year, month, day)
+
+        this.year = year
+        this.month = month
+        this.day = day
+    }
+
+    private fun checkDate(year: Int, month: Int, day: Int) {
+        val calendarDate = Calendar.getInstance()
+        calendarDate.isLenient = false // Don't allow invalid dates
+        try {
+            calendarDate.set(year, month - 1, day) // Calendar months are 0-indexed
+            calendarDate.time
+        } catch (e: Exception) {
+            throw IllegalArgumentException("Invalid date: $day/$month/$year")
+        }
     }
 
     /**
@@ -86,6 +96,12 @@ class EntryDate {
         this.year = calendar.get(Calendar.YEAR)
         this.month = calendar.get(Calendar.MONTH)
         this.day = calendar.get(Calendar.DAY_OF_MONTH)
+    }
+
+    fun toCalendar(): Calendar {
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month, day)
+        return calendar
     }
 
     override fun toString(): String {

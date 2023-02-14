@@ -1,12 +1,14 @@
 package com.example.dailyday.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import com.example.dailyday.database.DatabaseEntries
 import com.example.dailyday.R
 import com.example.dailyday.activities.auth.RegisterActivity
 import com.example.dailyday.activities.evaluation.CreateEvaluationActivity
 import com.example.dailyday.activities.evaluation.EditEvaluationActivity
+import com.example.dailyday.entry.EntryDate
 import com.google.firebase.FirebaseApp
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -19,6 +21,7 @@ class MainActivity : BaseActivity() {
 
         FirebaseApp.initializeApp(this)
 
+        historyLogic()
         logoutLogic()
         evaluateLogic()
     }
@@ -27,6 +30,16 @@ class MainActivity : BaseActivity() {
         super.onStart()
 
         registerLogic()
+    }
+
+    /**
+     * Implements the history logic
+     */
+    private fun historyLogic() {
+        val historyButton = findViewById<Button>(R.id.history_button)
+        historyButton.setOnClickListener {
+            goToActivity(HistoryActivity::class.java)
+        }
     }
 
     /**

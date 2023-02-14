@@ -15,7 +15,7 @@
             android:name=".activities.evaluation.EditEvaluationActivity"
             android:exported="false" />
         <activity
-            android:name=".ModifiyEvaluationActivitz"
+            android:name=".activities.HistoryActivity"
             android:exported="false" />
         <activity
             android:name=".activities.evaluation.CreateEvaluationActivity"
