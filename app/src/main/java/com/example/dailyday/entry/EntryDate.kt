@@ -100,7 +100,7 @@ class EntryDate {
 
     fun toCalendar(): Calendar {
         val calendar = Calendar.getInstance()
-        calendar.set(year, month, day)
+        calendar.set(year, month - 1, day) // Calendar months are 0-indexed
         return calendar
     }
 
@@ -134,6 +134,17 @@ class EntryDate {
          */
         fun today(): EntryDate {
             return EntryDate(Calendar.getInstance())
+        }
+
+        fun fromString(str: String): EntryDate {
+            val parts = str.split("/")
+            if (parts.size != 3) {
+                throw IllegalArgumentException("Invalid date string: $str")
+            }
+            val year = parts[2].toInt()
+            val month = parts[1].toInt()
+            val day = parts[0].toInt()
+            return EntryDate(year, month, day)
         }
     }
 }

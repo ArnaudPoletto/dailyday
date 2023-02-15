@@ -1,14 +1,12 @@
 package com.example.dailyday.activities
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
-import com.example.dailyday.database.DatabaseEntries
 import com.example.dailyday.R
 import com.example.dailyday.activities.auth.RegisterActivity
 import com.example.dailyday.activities.evaluation.CreateEvaluationActivity
 import com.example.dailyday.activities.evaluation.EditEvaluationActivity
-import com.example.dailyday.entry.EntryDate
+import com.example.dailyday.database.DatabaseEntries
 import com.google.firebase.FirebaseApp
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -24,6 +22,7 @@ class MainActivity : BaseActivity() {
         historyLogic()
         logoutLogic()
         evaluateLogic()
+        importLogic()
     }
 
     override fun onStart() {
@@ -94,6 +93,13 @@ class MainActivity : BaseActivity() {
         val currentUser = auth.currentUser
         if (currentUser == null) {
             goToActivity(RegisterActivity::class.java)
+        }
+    }
+
+    private fun importLogic() {
+        val importButton = findViewById<Button>(R.id.import_button)
+        importButton.setOnClickListener {
+            goToActivity(ImportActivity::class.java)
         }
     }
 }

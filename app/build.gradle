@@ -52,4 +52,7 @@ dependencies {
 
     // Calendar
     implementation 'com.github.prolificinteractive:material-calendarview:2.0.1'
+
+    // Google Sheets
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }

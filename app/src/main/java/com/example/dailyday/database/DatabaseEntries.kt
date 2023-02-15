@@ -83,15 +83,11 @@ class DatabaseEntries {
                 callback(entriesList)
             }
        }
-
-        /**
-         * Returns the entry of the logged in user for today.
-         */
-        fun getLoggedInUserTodayEntry(auth: FirebaseAuth, database: FirebaseDatabase, callback: (Entry?) -> Unit) {
+        fun getLoggedInUserEntryAtDate(auth: FirebaseAuth, database: FirebaseDatabase, date: EntryDate, callback: (Entry?) -> Unit) {
             getLoggedInUserEntries(auth, database) { entries ->
                 for (entry in entries) {
                     val entryDate: EntryDate = entry.getDate()
-                    if (entryDate == EntryDate.today()) {
+                    if (entryDate == date) {
                         callback(entry)
                         return@getLoggedInUserEntries
                     }
@@ -119,12 +115,25 @@ class DatabaseEntries {
          * Returns true if the logged in user has already evaluated today.
          */
         fun loggedInUserAlreadyEvaluatedToday(auth: FirebaseAuth, database: FirebaseDatabase, callback: (Boolean) -> Unit) {
-            getLoggedInUserTodayEntry(auth, database) { entry ->
-                if (entry != null) {
-                    callback(true)
-                } else {
-                    callback(false)
+            val today = EntryDate(Calendar.getInstance())
+            loggedInUserAlreadyEvaluatedAtDate(auth, database, today, callback)
+        }
+
+        fun loggedInUserAlreadyEvaluatedAtDate(
+            auth: FirebaseAuth,
+            database: FirebaseDatabase,
+            date: EntryDate,
+            callback: (Boolean) -> Unit
+        ) {
+            getLoggedInUserEntries(auth, database) { entries ->
+                for (entry in entries) {
+                    val entryDate: EntryDate = entry.getDate()
+                    if (entryDate == date) {
+                        callback(true)
+                        return@getLoggedInUserEntries
+                    }
                 }
+                callback(false)
             }
         }
 

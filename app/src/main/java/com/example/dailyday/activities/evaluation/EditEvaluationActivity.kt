@@ -2,13 +2,16 @@ package com.example.dailyday.activities.evaluation
 
 import android.os.Bundle
 import android.text.format.DateFormat
+import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import com.example.dailyday.database.DatabaseEntries
 import com.example.dailyday.R
 import com.example.dailyday.activities.BaseActivity
 import com.example.dailyday.activities.MainActivity
 import com.example.dailyday.entry.Entry
+import com.example.dailyday.entry.EntryDate
 import com.example.dailyday.entry.EntryScore
 import com.example.dailyday.entry.EntrySleep
 import com.google.firebase.database.ktx.database
@@ -17,42 +20,65 @@ import java.util.*
 
 class EditEvaluationActivity : BaseActivity() {
 
+    private var date: EntryDate = EntryDate.today()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_evaluation)
 
+        // Get date from extra
+        val dateStr = intent.getStringExtra("date")
+        if (dateStr != null) {
+            date = EntryDate.fromString(dateStr)
+        }
+
         checkAlreadyEvaluated()
         autofill()
 
-        val edit = findViewById<android.widget.Button>(R.id.edit_button)
+        val edit = findViewById<Button>(R.id.edit_evaluation_button)
         edit.setOnClickListener {
             edit()
         }
 
         // Print date today
-        val dateToday = findViewById<android.widget.TextView>(R.id.modify_date)
-        dateToday.text = DateFormat.format("MMMM d, yyyy", Date())
+        val dateToday = findViewById<TextView>(R.id.modify_date)
+        dateToday.text = date.toString()
+
+        // Back button
+        backLogic()
     }
 
-    fun checkAlreadyEvaluated() {
-        DatabaseEntries.loggedInUserAlreadyEvaluatedToday(
+    private fun checkAlreadyEvaluated() {
+        DatabaseEntries.loggedInUserAlreadyEvaluatedAtDate(
             auth,
-            Firebase.database
+            Firebase.database,
+            date
         ) { alreadyEvaluated ->
             if (!alreadyEvaluated) {
-                Toast.makeText(this, "You haven't evaluated today", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "You haven't evaluated at this date", Toast.LENGTH_SHORT).show()
                 goToActivity(MainActivity::class.java)
             }
         }
     }
 
     /**
+     * Implements the logic of the back button
+     */
+    private fun backLogic() {
+        val historyBack = findViewById<Button>(R.id.edit_evaluation_back_button)
+        historyBack.setOnClickListener {
+            goToActivity(MainActivity::class.java)
+            finish()
+        }
+    }
+
+    /**
      * Autofill the form with the user's evaluation of today
      */
-    fun autofill() {
-        DatabaseEntries.getLoggedInUserTodayEntry(auth, Firebase.database) { entry ->
+    private fun autofill() {
+        DatabaseEntries.getLoggedInUserEntryAtDate(auth, Firebase.database, date) { entry ->
             if (entry == null) {
-                return@getLoggedInUserTodayEntry
+                return@getLoggedInUserEntryAtDate
             }
 
             val appreciation: EntryScore? = entry.getAppreciation()
@@ -78,7 +104,7 @@ class EditEvaluationActivity : BaseActivity() {
     /**
      * Edit the user's evaluation of today, redirecting to the main activity
      */
-    fun edit() {
+    private fun edit() {
         // Build modified entry
         val appreciation: String = findViewById<EditText>(R.id.evaluation_appreciation).text.toString()
         val hoursOfSleep: String = findViewById<EditText>(R.id.evaluation_hours_of_sleep).text.toString()

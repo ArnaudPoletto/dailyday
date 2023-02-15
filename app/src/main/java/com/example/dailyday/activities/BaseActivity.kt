@@ -33,4 +33,14 @@ open class BaseActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+
+    /**
+     * Go to an activity with an extra
+     */
+    protected fun goToActivityWithExtra(activity: Class<*>, extraName: String, extraValue: String) {
+        val intent = Intent(this, activity)
+        intent.putExtra(extraName, extraValue)
+        startActivity(intent)
+        finish()
+    }
 }

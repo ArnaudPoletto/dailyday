@@ -1,7 +1,7 @@
 package com.example.dailyday.activities.evaluation
 
 import android.os.Bundle
-import android.text.format.DateFormat
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.example.dailyday.database.DatabaseEntries
@@ -9,27 +9,36 @@ import com.example.dailyday.R
 import com.example.dailyday.activities.BaseActivity
 import com.example.dailyday.activities.MainActivity
 import com.example.dailyday.entry.Entry
+import com.example.dailyday.entry.EntryDate
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.util.Calendar
-import java.util.Date
 
 class CreateEvaluationActivity : BaseActivity() {
+
+    private var date: EntryDate = EntryDate.today()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_evaluation)
 
+        // Get date from extra
+        val dateStr = intent.getStringExtra("date")
+        if (dateStr != null) {
+            date = EntryDate.fromString(dateStr)
+        }
+
         // Evaluate button
-        val evaluate = findViewById<android.widget.Button>(R.id.edit_button)
+        val evaluate = findViewById<android.widget.Button>(R.id.create_evaluation_button)
         evaluate.setOnClickListener {
-            DatabaseEntries.loggedInUserAlreadyEvaluatedToday(
+            DatabaseEntries.loggedInUserAlreadyEvaluatedAtDate(
                 auth,
-                Firebase.database
+                Firebase.database,
+                date
             ) { alreadyEvaluated ->
                 if (alreadyEvaluated) {
-                    Toast.makeText(this, "You already evaluated today", Toast.LENGTH_SHORT).show()
-                    return@loggedInUserAlreadyEvaluatedToday
+                    Toast.makeText(this, "You already evaluated at this date", Toast.LENGTH_SHORT).show()
+                    return@loggedInUserAlreadyEvaluatedAtDate
                 }
                 evaluate()
             }
@@ -37,7 +46,21 @@ class CreateEvaluationActivity : BaseActivity() {
 
         // Print date today
         val dateToday = findViewById<android.widget.TextView>(R.id.modify_date)
-        dateToday.text = DateFormat.format("MMMM d, yyyy", Date())
+        dateToday.text = date.toString()
+
+        // Back button
+        backLogic()
+    }
+
+    /**
+     * Implements the logic of the back button
+     */
+    private fun backLogic() {
+        val historyBack = findViewById<Button>(R.id.create_evaluation_back_button)
+        historyBack.setOnClickListener {
+            goToActivity(MainActivity::class.java)
+            finish()
+        }
     }
 
     /**
@@ -52,7 +75,7 @@ class CreateEvaluationActivity : BaseActivity() {
         val appreciationValue: Int? = if (appreciation == "") null else appreciation.toInt()
         val energyValue: Int? = if (energy == "") null else energy.toInt()
         val hoursOfSleepValue: Double? = if (hoursOfSleep == "") null else hoursOfSleep.toDouble()
-        val dateValue: Calendar = Calendar.getInstance()
+        val dateValue: Calendar = date.toCalendar()
 
         val entry: Entry
         try {
