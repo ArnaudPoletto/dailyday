@@ -2,6 +2,7 @@ package com.example.dailyday.activities.evaluation
 
 import android.os.Bundle
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import com.example.dailyday.database.DatabaseEntries
@@ -45,7 +46,7 @@ class CreateEvaluationActivity : BaseActivity() {
         }
 
         // Print date today
-        val dateToday = findViewById<android.widget.TextView>(R.id.modify_date)
+        val dateToday = findViewById<android.widget.TextView>(R.id.create_date)
         dateToday.text = date.toString()
 
         // Back button
@@ -69,17 +70,42 @@ class CreateEvaluationActivity : BaseActivity() {
     fun evaluate() {
         // Build entry
         val appreciation: String = findViewById<EditText>(R.id.evaluation_appreciation).text.toString()
-        val hoursOfSleep: String = findViewById<EditText>(R.id.evaluation_hours_of_sleep).text.toString()
         val energy: String = findViewById<EditText>(R.id.evaluation_energy).text.toString()
+        val activity: String = findViewById<EditText>(R.id.evaluation_activity).text.toString()
+        val socialInteraction: String = findViewById<EditText>(R.id.evaluation_social_interaction).text.toString()
+        val stress: String = findViewById<EditText>(R.id.evaluation_stress).text.toString()
+        val hoursOfSleep: String = findViewById<EditText>(R.id.evaluation_hours_of_sleep).text.toString()
+        val cry: Boolean = findViewById<CheckBox>(R.id.evaluation_cry).isChecked
+        val outside: Boolean = findViewById<CheckBox>(R.id.evaluation_outside).isChecked
+        val alcohol: Boolean = findViewById<CheckBox>(R.id.evaluation_alcohol).isChecked
+        val important: Boolean = findViewById<CheckBox>(R.id.evaluation_important).isChecked
+        val cryReason: String = findViewById<EditText>(R.id.evaluation_cry_reason).text.toString()
 
         val appreciationValue: Int? = if (appreciation == "") null else appreciation.toInt()
         val energyValue: Int? = if (energy == "") null else energy.toInt()
+        val activityValue: Int? = if (activity == "") null else activity.toInt()
+        val socialInteractionValue: Int? = if (socialInteraction == "") null else socialInteraction.toInt()
+        val stressValue: Int? = if (stress == "") null else stress.toInt()
         val hoursOfSleepValue: Double? = if (hoursOfSleep == "") null else hoursOfSleep.toDouble()
+        val cryReasonValue: String = cryReason.takeIf { cry } ?: ""
         val dateValue: Calendar = date.toCalendar()
 
         val entry: Entry
         try {
-            entry = Entry(appreciationValue, energyValue, hoursOfSleepValue, dateValue)
+            entry = Entry(
+                appreciationValue,
+                energyValue,
+                activityValue,
+                socialInteractionValue,
+                stressValue,
+                hoursOfSleepValue,
+                cry,
+                outside,
+                alcohol,
+                important,
+                cryReasonValue,
+                dateValue
+            )
         } catch (e: Exception) {
             Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
             return

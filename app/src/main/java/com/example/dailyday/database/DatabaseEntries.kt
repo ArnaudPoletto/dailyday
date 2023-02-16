@@ -41,6 +41,27 @@ class DatabaseEntries {
                 energy = null
             }
 
+            val activity: EntryScore?
+            if (entryData.containsKey("activity")) {
+                activity = EntryScore(((entryData["activity"] as Map<*, *>)["value"] as Long).toInt())
+            } else {
+                activity = null
+            }
+
+            val socialInteraction: EntryScore?
+            if (entryData.containsKey("socialInteraction")) {
+                socialInteraction = EntryScore(((entryData["socialInteraction"] as Map<*, *>)["value"] as Long).toInt())
+            } else {
+                socialInteraction = null
+            }
+
+            val stress: EntryScore?
+            if (entryData.containsKey("stress")) {
+                stress = EntryScore(((entryData["stress"] as Map<*, *>)["value"] as Long).toInt())
+            } else {
+                stress = null
+            }
+
             var hoursOfSleep: EntrySleep?
             if (entryData.containsKey("hoursOfSleep")) {
                 // Try casting as Long and then as Double
@@ -54,12 +75,60 @@ class DatabaseEntries {
                 hoursOfSleep = null
             }
 
+            var cry: Boolean?
+            if (entryData.containsKey("cry")) {
+                cry = (entryData["cry"] as Boolean)
+            } else {
+                cry = null
+            }
+
+            var outside: Boolean?
+            if (entryData.containsKey("outside")) {
+                outside = (entryData["outside"] as Boolean)
+            } else {
+                outside = null
+            }
+
+            var alcohol: Boolean?
+            if (entryData.containsKey("alcohol")) {
+                alcohol = (entryData["alcohol"] as Boolean)
+            } else {
+                alcohol = null
+            }
+
+            var important: Boolean?
+            if (entryData.containsKey("important")) {
+                important = (entryData["important"] as Boolean)
+            } else {
+                important = null
+            }
+
+            var cryReason: String?
+            if (entryData.containsKey("cryReason")) {
+                cryReason = (entryData["cryReason"] as String)
+            } else {
+                cryReason = null
+            }
+
             val dateYear: Int = ((entryData["date"] as Map<*, *>)["year"] as Long).toInt()
             val dateMonth: Int = ((entryData["date"] as Map<*, *>)["month"] as Long).toInt()
             val dateDay: Int = ((entryData["date"] as Map<*, *>)["day"] as Long).toInt()
             val date = EntryDate(dateYear, dateMonth, dateDay)
 
-            return Entry(appreciation, energy, hoursOfSleep, date)
+            return Entry(
+                appreciation,
+                energy,
+                activity,
+                socialInteraction,
+                stress,
+                hoursOfSleep,
+                cry,
+                outside,
+                alcohol,
+                important,
+                cryReason,
+                date
+            )
         }
 
         /**

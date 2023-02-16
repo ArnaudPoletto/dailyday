@@ -104,6 +104,12 @@ class EntryDate {
         return calendar
     }
 
+    fun isinFuture(): Boolean {
+        val today = Calendar.getInstance()
+        val entryDate = this.toCalendar()
+        return entryDate.after(today)
+    }
+
     override fun toString(): String {
         return "$day/$month/$year"
     }

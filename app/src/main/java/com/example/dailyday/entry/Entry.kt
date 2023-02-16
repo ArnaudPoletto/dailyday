@@ -6,8 +6,15 @@ import java.util.Date
 class Entry : java.io.Serializable{
     private var appreciation: EntryScore? = null
     private var energy: EntryScore? = null
+    private var activity: EntryScore? = null
+    private var socialInteraction: EntryScore? = null
+    private var stress: EntryScore? = null
     private var hoursOfSleep: EntrySleep? = null
-
+    private var cry: Boolean? = null
+    private var outside: Boolean? = null
+    private var alcohol: Boolean? = null
+    private var important: Boolean? = null
+    private var cryReason: String? = null
     private lateinit var date: EntryDate
 
     private var updatedAt: Long = Date().time
@@ -27,7 +34,15 @@ class Entry : java.io.Serializable{
     constructor(
         appreciation: Int?,
         energy: Int?,
+        activity: Int?,
+        socialInteraction: Int?,
+        stress: Int?,
         hoursOfSleep: Double?,
+        cry: Boolean?,
+        outside: Boolean?,
+        alcohol: Boolean?,
+        important: Boolean?,
+        cryReason: String?,
         date: Calendar
     ) {
         if (appreciation != null) {
@@ -36,9 +51,23 @@ class Entry : java.io.Serializable{
         if (energy != null) {
             this.energy = EntryScore(energy)
         }
+        if (activity != null) {
+            this.activity = EntryScore(activity)
+        }
+        if (socialInteraction != null) {
+            this.socialInteraction = EntryScore(socialInteraction)
+        }
+        if (stress != null) {
+            this.stress = EntryScore(stress)
+        }
         if (hoursOfSleep != null) {
             this.hoursOfSleep = EntrySleep(hoursOfSleep)
         }
+        this.cry = cry
+        this.outside = outside
+        this.alcohol = alcohol
+        this.important = important
+        this.cryReason = cryReason
         this.date = EntryDate(date)
     }
 
@@ -53,12 +82,28 @@ class Entry : java.io.Serializable{
     constructor(
         appreciation: EntryScore?,
         energy: EntryScore?,
+        activity: EntryScore?,
+        socialInteraction: EntryScore?,
+        stress: EntryScore?,
         hoursOfSleep: EntrySleep?,
+        cry: Boolean?,
+        outside: Boolean?,
+        alcohol: Boolean?,
+        important: Boolean?,
+        cryReason: String?,
         date: EntryDate
     ) {
         this.appreciation = appreciation
         this.energy = energy
+        this.activity = activity
+        this.socialInteraction = socialInteraction
+        this.stress = stress
         this.hoursOfSleep = hoursOfSleep
+        this.cry = cry
+        this.outside = outside
+        this.alcohol = alcohol
+        this.important = important
+        this.cryReason = cryReason
         this.date = date
     }
 
@@ -87,11 +132,87 @@ class Entry : java.io.Serializable{
     }
 
     /**
+     * get the activity score
+     * @return the activity score
+     */
+    fun getActivity(): EntryScore? {
+        if (this.activity == null) {
+            return null
+        }
+
+        return this.activity!!
+    }
+
+    /**
+     * get the social interaction score
+     * @return the social interaction score
+     */
+    fun getSocialInteraction(): EntryScore? {
+        if (this.socialInteraction == null) {
+            return null
+        }
+
+        return this.socialInteraction!!
+    }
+
+    /**
+     * get the stress score
+     * @return the stress score
+     */
+    fun getStress(): EntryScore? {
+        if (this.stress == null) {
+            return null
+        }
+
+        return this.stress!!
+    }
+
+    /**
      * get the hours of sleep
      * @return the hours of sleep
      */
     fun getHoursOfSleep(): EntrySleep? {
         return hoursOfSleep
+    }
+
+    /**
+     * get the cry
+     * @return the cry
+     */
+    fun getCry(): Boolean? {
+        return cry
+    }
+
+    /**
+     * get the outside
+     * @return the outside
+     */
+    fun getOutside(): Boolean? {
+        return outside
+    }
+
+    /**
+     * get the alcohol
+     * @return the alcohol
+     */
+    fun getAlcohol(): Boolean? {
+        return alcohol
+    }
+
+    /**
+     * get the important
+     * @return the important
+     */
+    fun getImportant(): Boolean? {
+        return important
+    }
+
+    /**
+     * get the cry reason
+     * @return the cry reason
+     */
+    fun getCryReason(): String? {
+        return cryReason
     }
 
     /**
